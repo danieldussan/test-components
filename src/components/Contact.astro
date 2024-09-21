@@ -1,0 +1,107 @@
+---
+import { LiaPhoneVolumeSolid } from "react-icons/lia";
+import { MdOutlineMailOutline } from "react-icons/md";
+
+import { getEntry } from "astro:content";
+
+const { lang } = Astro.props;
+
+const homepage = await getEntry(lang === "en" ? "en" : "es", "homepage");
+
+const { contact } = homepage?.data;
+console.log(contact.form.name);
+---
+
+<section class="bg-gray-100 w-screen pb-5">
+  <!-- Titile and subtitle -->
+  <div class="flex flex-col items-center justify-center">
+    <h1
+      class="text-3xl font-thin text-center text-gray-400 mt-6 mb-2 md:text-4xl lg:text-[56px] xl:text-[62px] 2xl:text-[70px]"
+    >
+      {contact.title}
+    </h1>
+    <p
+      class="text-gray-500 text-center text-xs max-w-[300px] md:max-w-md md:text-[16px] lg:text-lg lg:max-w-2xl xl:text-xl xl:max-w-3xl 2xl:text-2xl 2xl:max-w-4xl"
+    >
+      {contact.subtitle}
+    </p>
+  </div>
+  <!-- Contact form -->
+  <div class="mt-5">
+    <form
+      class="flex flex-col justify-center items-center md:flex-row"
+      action="/"
+      method=""
+    >
+      <input
+        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg"
+        type="text"
+        name={contact.form.name}
+        placeholder={contact.form.name}
+        required
+      />
+      <input
+        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg"
+        type="email"
+        name={contact.form.email}
+        placeholder={contact.form.email}
+        required
+      />
+      <input
+        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg"
+        type="tel"
+        name={contact.form.phone}
+        placeholder={contact.form.phone}
+        required
+      />
+      <button
+        class="rounded-lg py-2 px-14 bg-blue-600 text-white font-bold max-w-max text-center mb-5 md:ml-5 md:px-10 lg:max-w-48 xl:max-w-56 xl:text-base"
+        type="submit">{contact.form.submit}</button
+      >
+    </form>
+  </div>
+  <!-- Contact information -->
+  <div class="hidden md:flex justify-center items-center gap-x-10 xl:-translate-x-24 ">
+    <!-- Phone information -->
+    <div class="flex items-center space-x-2 rounded-md">
+      <LiaPhoneVolumeSolid
+        className="text-blue-500 text-2xl mr-1 md:text-xl lg:text-2xl"
+      />
+      <div class="flex flex-col items-start md:text-sm lg:text-base">
+        <span class="text-gray-500 font-bold">{contact.info.phone}</span>
+        <span class="text-blue-500">03 5432 1234</span>
+      </div>
+    </div>
+    <!-- Email information -->
+    <div class="sm:flex items-center space-x-2 rounded-md">
+      <MdOutlineMailOutline
+        className="text-blue-500 text-2xl mr-1 md:text-xl lg:text-2xl"
+      />
+      <div class="flex flex-col items-start md:text-sm lg:text-base">
+        <span class="text-gray-500 font-bold">{contact.info.email}</span>
+        <span class="text-blue-500">SoftwareJourney@example.com</span>
+      </div>
+    </div>
+    <!-- How did you find us? information -->
+    <div>
+      <select
+        class="flex items-end bg-transparent text-gray-500 border border-gray-300 rounded-md p-3 md:text-sm md:p-2 lg:text-base lg:px-6 lg:py-2"
+      >
+        <option>{contact.Dropdown.text}</option>
+        {
+          contact.Dropdown.options.map((option) => (
+            <option class="" value={option.label}>
+              {option.label}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+  </div>
+  <!-- Mobile information -->
+  <div class="flex justify-center md:hidden">
+    <p class="text-gray-500 text-center text-xs max-w-[300px]">
+      {contact.textMobile.content}
+    </p>
+  </div>
+</section>
