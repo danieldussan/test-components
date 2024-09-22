@@ -9,14 +9,13 @@ const { lang } = Astro.props;
 const homepage = await getEntry(lang === "en" ? "en" : "es", "homepage");
 
 const { contact } = homepage?.data;
-console.log(contact.form.name);
 ---
 
 <section class="bg-gray-100 w-screen pb-5">
   <!-- Titile and subtitle -->
   <div class="flex flex-col items-center justify-center">
     <h1
-      class="text-3xl font-thin text-center text-gray-400 mt-6 mb-2 md:text-4xl lg:text-[56px] xl:text-[62px] 2xl:text-[70px]"
+      class="text-3xl font-extralight text-center text-gray-500 mt-6 mb-4 md:text-4xl lg:text-[56px] xl:text-[62px] 2xl:text-[70px]"
     >
       {contact.title}
     </h1>
@@ -34,21 +33,21 @@ console.log(contact.form.name);
       method=""
     >
       <input
-        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg"
+        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg focus:ring-blue-500"
         type="text"
         name={contact.form.name}
         placeholder={contact.form.name}
         required
       />
       <input
-        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg"
+        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg focus:ring-blue-500"
         type="email"
         name={contact.form.email}
         placeholder={contact.form.email}
         required
       />
       <input
-        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg"
+        class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg focus:ring-blue-500"
         type="tel"
         name={contact.form.phone}
         placeholder={contact.form.phone}
@@ -61,7 +60,9 @@ console.log(contact.form.name);
     </form>
   </div>
   <!-- Contact information -->
-  <div class="hidden md:flex justify-center items-center gap-x-10 xl:-translate-x-24 ">
+  <div
+    class="hidden md:flex justify-center items-center gap-x-10 xl:-translate-x-24"
+  >
     <!-- Phone information -->
     <div class="flex items-center space-x-2 rounded-md">
       <LiaPhoneVolumeSolid
@@ -105,3 +106,10 @@ console.log(contact.form.name);
     </p>
   </div>
 </section>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+  * {
+    font-family: "Inter", sans-serif;
+  }
+</style>

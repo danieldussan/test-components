@@ -1,7 +1,7 @@
 ---
 contact:
     title: "START YOUR NEW PROJECT"
-    subtitle: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, placeat!"
+    subtitle: "Enim tempor eget pharetra facilisis sed maecenas adipiscing. Eu leo molestie vel, ornare non id blandit netus."
     form:
       name: "NAMES"
       email: "EMAIL"
