@@ -1,14 +1,19 @@
 ---
 import { LiaPhoneVolumeSolid } from "react-icons/lia";
 import { MdOutlineMailOutline } from "react-icons/md";
+import Modal from "./Modal.astro";
 
 import { getEntry } from "astro:content";
+import Modal2 from "./Modal2.astro";
+import { FaCircleExclamation } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
 
 const { lang } = Astro.props;
 
 const homepage = await getEntry(lang === "en" ? "en" : "es", "homepage");
 
 const { contact } = homepage?.data;
+const { modal, modalError } = contact;
 ---
 
 <section class="bg-gray-100 w-screen pb-5">
@@ -29,7 +34,7 @@ const { contact } = homepage?.data;
   <div class="mt-5">
     <form
       class="flex flex-col justify-center items-center md:flex-row"
-      action="/"
+      action=""
       method=""
     >
       <input
@@ -37,26 +42,25 @@ const { contact } = homepage?.data;
         type="text"
         name={contact.form.name}
         placeholder={contact.form.name}
-        required
       />
       <input
         class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg focus:ring-blue-500"
         type="email"
         name={contact.form.email}
         placeholder={contact.form.email}
-        required
       />
       <input
         class="rounded-md p-2 max-w-max text-center mb-5 mx-1 md:max-w-40 lg:max-w-56 xl:max-w-64 xl:text-lg focus:ring-blue-500"
         type="tel"
         name={contact.form.phone}
         placeholder={contact.form.phone}
-        required
       />
-      <button
+      <div class="">
+
+        <button
         class="rounded-lg py-2 px-14 bg-blue-600 text-white font-bold max-w-max text-center mb-5 md:ml-5 md:px-10 lg:max-w-48 xl:max-w-56 xl:text-base"
-        type="submit">{contact.form.submit}</button
-      >
+        type="submit">{contact.form.submit}</button>
+      </div>
     </form>
   </div>
   <!-- Contact information -->
@@ -107,9 +111,65 @@ const { contact } = homepage?.data;
   </div>
 </section>
 
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-  * {
-    font-family: "Inter", sans-serif;
-  }
-</style>
+<div id="containerModalSuccess" class="fixed left-0 right-0 top-0 bottom-0 z-50 flex justify-center items-center invisible">
+  <dialog id="dialogSuccess" class="rounded-3xl transition-opacity duration-500 opacity-0">
+    <div class="m-auto w-[90%] max-w-xl bg-white max-h-[90%] py-[3rem] px-[2.5rem] rounded-3xl grid place-items-center gap-5">
+        {<FaCheckCircle className="text-5xl text-green-500" />}
+        <h2 class="text-center text-xl font-bold">{modal.title}</h2>
+        <p class="text-center">{modal.text}</p>
+        <label id="cancelSuccess" class="cursor-pointer mt-2 px-6 py-2 bg-blue-500 rounded-xl text-white font-semibold">{modal.textButton}</label>
+    </div>
+  </dialog>
+</div>
+
+<div id="containerModalError" class="fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center invisible">
+  <dialog id="dialogError" class="rounded-3xl transition-opacity duration-500 opacity-0">
+    <div class="m-auto w-[90%] max-w-xl bg-white max-h-[90%] py-[3rem] px-[2.5rem] rounded-3xl grid place-items-center gap-5">
+        {<FaCircleExclamation className="text-5xl text-red-500"/>}
+        <h2 class="text-center text-xl font-bold">{modalError.title}</h2>
+        <p class="text-center">{modalError.text}</p>
+        <label id="cancelError" class="cursor-pointer mt-2 px-6 py-2 bg-blue-500 rounded-xl text-white font-semibold">{modalError.textButton}</label>
+    </div>
+  </dialog>
+</div>
+
+
+
+<script>
+  const form = document.querySelector("form") as HTMLFormElement;
+  
+
+  const dialogSuccess = document.getElementById("dialogSuccess") as HTMLDialogElement;
+  const dialogError = document.getElementById("dialogError") as HTMLDialogElement;
+  const cancelButton = document.getElementById("cancelSuccess") as HTMLLabelElement;
+  const cancelButtonError = document.getElementById("cancelError") as HTMLLabelElement;
+
+  const test = false;
+
+  form.addEventListener("submit", function (event: Event): void {
+    event.preventDefault();
+    if (test){
+      dialogSuccess.showModal();
+      dialogSuccess.classList.add("opacity-100");
+      // containerModalSuccess.classList.remove("invisible");
+    }else {
+      dialogError.showModal();
+      dialogError.classList.add("opacity-100");
+      // containerModalError.classList.remove("invisible");
+    }
+
+  });
+
+  cancelButton.addEventListener("click", function (event: Event): void {
+    event.preventDefault();
+    dialogSuccess.close();
+    // containerModalSuccess.classList.add("invisible");
+  });
+
+  cancelButtonError.addEventListener("click", function (event: Event): void {
+    event.preventDefault();
+    dialogError.close();
+    // containerModalSuccess.classList.add("invisible");
+  });
+
+</script>

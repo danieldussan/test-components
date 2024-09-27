@@ -1,0 +1,40 @@
+---
+import { FaCircleExclamation } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
+const { title , text , textButton , error } = Astro.props;
+---
+
+<dialog id="favDialog" class="rounded-3xl transition-all">
+    <div class="m-auto w-[90%] max-w-xl bg-white max-h-[90%] py-[3rem] px-[2.5rem] rounded-3xl grid place-items-center gap-5">
+        {error ? 
+        <FaCircleExclamation className="text-5xl text-red-500" /> : 
+        <FaCheckCircle className="text-5xl text-green-500"/>}
+        <h2 class="text-center text-xl font-bold">{title}</h2>
+        <p class="text-center">{text}</p>
+        <label id="cancel" class="modalClose cursor-pointer mt-2 px-6 py-2 bg-blue-500 rounded-xl text-white font-semibold">{textButton}</label>
+    </div>
+</dialog>
+  
+  <menu class="">
+    <button class="p-2 bg-blue-500 text-white text-xl max-w-xs rounded-lg" id="updateDetails">Update details</button>
+  </menu>
+  
+  <script>
+    (function () {
+      var updateButton = document.getElementById("updateDetails") as HTMLButtonElement;
+      var cancelButton = document.getElementById("cancel") as HTMLButtonElement;
+      var favDialog = document.getElementById("favDialog") as HTMLDialogElement;
+  
+      // Update button opens a modal dialog
+      updateButton.addEventListener("click", function () {
+        favDialog.showModal();
+      });
+  
+      // Form cancel button closes the dialog box
+      cancelButton.addEventListener("click", function () {
+        favDialog.close();
+      });
+    })();
+  </script>
+
+

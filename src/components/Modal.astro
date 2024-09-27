@@ -1,0 +1,26 @@
+---
+import { FaCircleExclamation } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
+const { title , text , textButton , idSection, error } = Astro.props;
+---
+
+
+<section  id={idSection} class="sectionModal transition-opacity duration-500 fixed left-0 right-0 top-0 bottom-0 bg-[#00000070] z-50 flex invisible opacity-0" >
+    <div class="m-auto w-[90%] max-w-xl bg-white max-h-[90%] py-[3rem] px-[2.5rem] rounded-3xl grid place-items-center gap-5">
+        {error ? 
+        <FaCircleExclamation className="text-5xl text-red-500" /> : 
+        <FaCheckCircle className="text-5xl text-green-500"/>}
+        <h2 class="text-center text-xl font-bold">{title}</h2>
+        <p class="text-center">{text}</p>
+        <label class="modalClose cursor-pointer mt-2 px-6 py-2 bg-blue-500 rounded-xl text-white font-semibold">{textButton}</label>
+    </div>
+</section>
+
+<script>
+    const closeModal = document.querySelector(".modalClose");
+    closeModal.addEventListener("click", function (event: Event): void {
+        event.preventDefault();
+        const modal = document.querySelector('.sectionModal');
+        modal.classList.add("invisible");
+    });
+</script>
